@@ -89,6 +89,20 @@ using BlazorApp.Models;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 7 "C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Client\Pages\Details.razor"
+using HttpServices;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 8 "C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Client\Pages\Details.razor"
+using UtilityFunctions;
+
+#line default
+#line hidden
+#nullable disable
     [Microsoft.AspNetCore.Components.RouteAttribute("/details/{pokemonID}")]
     public partial class Details : Microsoft.AspNetCore.Components.ComponentBase
     {
@@ -98,12 +112,12 @@ using BlazorApp.Models;
         }
         #pragma warning restore 1998
 #nullable restore
-#line 50 "C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Client\Pages\Details.razor"
+#line 52 "C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Client\Pages\Details.razor"
       
     [Parameter]
     public string pokemonID { get; set; }
 
-    private string pokemonFetchEndpoint = "https://pokeapi.co/api/v2/pokemon";
+    private HttpService http = new();
 
     private PokemonDetails pokemonDetails = new PokemonDetails();
     List<PokemonAbility> pokemonAbilities = new List<PokemonAbility>();
@@ -112,22 +126,23 @@ using BlazorApp.Models;
 
     protected override async Task OnInitializedAsync()
     {
-        var res = await HttpClient.GetFromJsonAsync<PokemonDetails>($"{pokemonFetchEndpoint}/{pokemonID}");
+        try
+        {
+            var response = await http.GetPokemonDetails(pokemonID);
 
-        pokemonAbilities = res.Abilities.ToList<PokemonAbility>();
-        pokemonTypes = res.Types.ToList<PokemonType>();
+            pokemonAbilities = response.Abilities.ToList<PokemonAbility>();
+            pokemonTypes = response.Types.ToList<PokemonType>();
 
-        pokemonDetails.Base_experience = res.Base_experience;
-        pokemonDetails.Name = FormatString(res.Name);
-        pokemonDetails.Weight = res.Weight;
-        pokemonDetails.Height = res.Height;
-    }
+            pokemonDetails.Base_experience = response.Base_experience;
+            pokemonDetails.Name = Util.FormatString(response.Name);
+            pokemonDetails.Weight = response.Weight;
+            pokemonDetails.Height = response.Height;
 
-    public static string FormatString(string str)
-    {
-        string formattedString = char.ToUpper(str.First()) + str.Substring(1).ToLower();
-
-        return formattedString;
+        }
+        catch (Exception ex)
+        {
+            navigationManager.NavigateTo($"/error/{ex.Message}");
+        }
     }
 
     protected void RedirectHome()

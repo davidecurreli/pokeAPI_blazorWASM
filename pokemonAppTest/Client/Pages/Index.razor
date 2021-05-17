@@ -3,7 +3,9 @@
 @inject HttpClient HttpClient
 @inject NavigationManager navigationManager;
 
-@using BlazorApp.Models
+@using BlazorApp.Models;
+@using HttpServices;
+@using UtilityFunctions;
 
 <div class="container" style="margin-top: 40px; text-align: center;">
     <div class="h5" style="margin-bottom: 40px;">My Poke App!</div>
@@ -21,7 +23,7 @@
             {
                 <tr>
                     <th scope="row">@counter</th>
-                    <td class="h6" style="cursor: pointer;">@FormatString(pokemon.Name)</td>
+                    <td class="h6" style="cursor: pointer;">@Util.FormatString(pokemon.Name)</td>
                     <td><img src="@GetPokemonImage(pokemon.Url)" style="height: 40px; width: 40px;"></td>
                     <td>
                         <button type="button" class="btn btn-primary" @onclick="(()=> RedirectDetails(pokemon.Url))">
@@ -36,48 +38,32 @@
 </div>
 
 @code {
-    List<PokemonList> pokemons = new List<PokemonList>();
+    private HttpService http = new();
 
-    private string pokemonFetchEndpoint = "https://pokeapi.co/api/v2/pokemon";
-
+    private List<PokemonList> pokemons = new List<PokemonList>();
     private int counter = 1;
 
     protected override async Task OnInitializedAsync()
     {
-        var res = await HttpClient.GetFromJsonAsync<PokemonFetchList>(pokemonFetchEndpoint);
-        pokemons = res.Results.ToList<PokemonList>();
+        try
+        {
+            PokemonFetchList response = await http.GetPokemonList();
+            pokemons = response.Results.ToList<PokemonList>();
+        }
+        catch (Exception ex)
+        {
+            navigationManager.NavigateTo($"/error/{ex.Message}");
+        }
     }
-
     public static string GetPokemonImage(string pokemonUrl)
     {
-        string imageEndpoint = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
-        string imageExtension = ".png";
-
-        string pokemonID = GetPokemonID(pokemonUrl);
-
-        pokemonID = String.Concat(pokemonID, imageExtension);
-
-        return String.Concat(imageEndpoint, pokemonID);
-    }
-
-    public static string GetPokemonID(string url)
-    {
-        string subStr = url.Substring(url.IndexOf("pokemon/") + 8);
-        string pokemonID = subStr.Remove(subStr.Length - 1, 1);
-
-        return pokemonID;
-    }
-
-    public static string FormatString(string str)
-    {
-        string formattedString = char.ToUpper(str.First()) + str.Substring(1).ToLower();
-
-        return formattedString;
+        return Util.GetPokemonImage(pokemonUrl);
     }
 
     protected void RedirectDetails(string url)
     {
-        string pokemonID = GetPokemonID(url);
+        string pokemonID = Util.GetPokemonID(url);
+
         navigationManager.NavigateTo($"/details/{pokemonID}");
     }
 
