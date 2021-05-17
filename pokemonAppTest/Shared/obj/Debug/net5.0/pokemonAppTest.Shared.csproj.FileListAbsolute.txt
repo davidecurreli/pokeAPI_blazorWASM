@@ -1,0 +1,12 @@
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\bin\Debug\net5.0\pokemonAppTest.Shared.deps.json
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\bin\Debug\net5.0\pokemonAppTest.Shared.dll
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\bin\Debug\net5.0\ref\pokemonAppTest.Shared.dll
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\bin\Debug\net5.0\pokemonAppTest.Shared.pdb
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\obj\Debug\net5.0\pokemonAppTest.Shared.csprojAssemblyReference.cache
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\obj\Debug\net5.0\pokemonAppTest.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\obj\Debug\net5.0\pokemonAppTest.Shared.AssemblyInfoInputs.cache
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\obj\Debug\net5.0\pokemonAppTest.Shared.AssemblyInfo.cs
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\obj\Debug\net5.0\pokemonAppTest.Shared.csproj.CoreCompileInputs.cache
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\obj\Debug\net5.0\pokemonAppTest.Shared.dll
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\obj\Debug\net5.0\ref\pokemonAppTest.Shared.dll
+C:\Users\david\source\repos\pokemonAppTest\pokemonAppTest\Shared\obj\Debug\net5.0\pokemonAppTest.Shared.pdb
